@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers | Direct Protection Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Same full style block as other pages */
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; color: #001f3f; background: #f5faff; }
+        header { background: #003366; color: white; padding: 15px 20px; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo img { height: 50px; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+        .hamburger { display: none; cursor: pointer; font-size: 28px; color: white; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #00aaff; }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; }
+        footer { background: #003366; color: white; text-align: center; padding: 30px; }
+        footer a { color: #00aaff; text-decoration: none; }
+
+        /* Dealer modals same as before */
+        #login-modal, #dashboard { /* same as above */ }
+        /* ... (copy full modal styles and script from previous pages) ... */
+    </style>
+</head>
+<body>
+
+<header>
+    <!-- Same header as all pages -->
+    <div class="header-container">
+        <div class="logo">
+            <img src="https://newsroom.adt.com/uploads/2021/06/b5586b9a-1c73-46ad-bccf-09ab444e2def.png" alt="ADT Logo">
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="packages.html">Packages</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="why-adt.html">Why ADT</a></li>
+                <li><a href="about.html">About ADT</a></li>
+                <li><a href="crime.html">Crime Rates</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="#" onclick="showLogin(); return false;">Dealer Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section>
+    <h2 style="color:#003366;">We're Hiring!</h2>
+    <p style="max-width:800px; margin:0 auto 40px;">
+        Join our growing team of security professionals. We're looking for motivated individuals to help protect homes across the community.
+    </p>
+    <div style="max-width:800px; margin:0 auto;">
+        <script type="text/javascript" src="https://form.jotform.com/jsform/253484755917168"></script>
+    </div>
+</section>
+
+<!-- Include the same login modal, dashboard, and script as in other pages -->
+<!-- (Copy the entire login/dashboard HTML and full <script> block from index.html or crime.html) -->
+
+<footer>
+    <p>&copy; 2025 Direct Protection Security – Authorized ADT Dealer<br>
+    <a href="https://investor.adt.com/">Investor Relations</a> | 
+    <a href="https://newsroom.adt.com/">Newsroom</a> | 
+    <a href="https://www.adt.com/privacy">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>
