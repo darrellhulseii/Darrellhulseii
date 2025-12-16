@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direct Protection Security | ADT Authorized Dealer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; margin: 0; padding: 0; color: #001f3f; background: #f5faff; }
+        header { background: #003366; color: white; padding: 15px 20px; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .logo img { height: 50px; }
+        .header-container { display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+        .hamburger { display: none; cursor: pointer; font-size: 28px; color: white; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 20px; }
+        nav a { color: white; text-decoration: none; font-weight: bold; }
+        nav a:hover { color: #00aaff; }
+        .hero { position: relative; color: white; text-align: center; padding: 180px 20px 120px; overflow: hidden; }
+        .hero iframe { position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); z-index: -2; border: none; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,51,102,0.65); z-index: -1; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 3.5em; margin: 0 0 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+        .hero p { font-size: 1.5em; margin: 20px 0; text-shadow: 1px 1px 3px rgba(0,0,0,0.7); }
+        .btn { background: #00aaff; color: white; padding: 15px 35px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block; margin: 10px; box-shadow: 0 4px 15px rgba(0,170,255,0.3); transition: all 0.3s; }
+        .btn:hover { background: #0088cc; transform: translateY(-2px); }
+        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; text-align: center; opacity: 0; animation: fadeIn 1s forwards; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        h2 { color: #003366; margin-bottom: 40px; }
+        .packages-grid, .services-grid, .video-grid, .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .package-card, .service-card, .video-card, .review-card { background: white; border-radius: 10px; padding: 30px; box-shadow: 0 4px 20px rgba(0,102,204,0.1); transition: transform 0.3s; }
+        .package-card:hover, .service-card:hover, .video-card:hover, .review-card:hover { transform: translateY(-10px); }
+        .price { font-size: 2em; color: #00aaff; font-weight: bold; margin: 20px 0; }
+        .features { list-style: none; padding: 0; text-align: left; max-width: 250px; margin: 0 auto; }
+        .features li { margin: 10px 0; padding-left: 25px; position: relative; }
+        .features li:before { content: '✓'; color: #00aaff; position: absolute; left: 0; font-weight: bold; }
+        .why-list { list-style: none; padding: 0; max-width: 700px; margin: 40px auto; text-align: left; }
+        .why-list li { margin: 15px 0; padding-left: 30px; position: relative; font-size: 1.1em; }
+        .why-list li:before { content: '✓'; color: #00aaff; position: absolute; left: 0; font-weight: bold; }
+        .video-card iframe { width: 100%; height: 200px; border-radius: 5px; }
+        .video-card p { margin-top: 15px; font-style: italic; font-size: 0.95em; }
+        .review-card { text-align: left; }
+        .review-card .stars { color: #00aaff; font-size: 1.2em; margin-bottom: 10px; }
+        .review-card .quote { font-style: italic; margin-bottom: 10px; }
+        .review-card .meta { font-size: 0.9em; color: #666; }
+        .contact-form { max-width: 600px; margin: 40px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,102,204,0.1); display: grid; gap: 15px; }
+        .contact-form input, .contact-form textarea { padding: 12px; border: 1px solid #ccc; border-radius: 5px; }
+        footer { background: #003366; color: white; text-align: center; padding: 30px; }
+        footer a { color: #00aaff; text-decoration: none; }
+
+        /* Dealer Modals */
+        #login-modal, #dashboard { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,51,102,0.7); justify-content: center; align-items: center; z-index: 2000; }
+        .modal-content { background: white; padding: 30px; border-radius: 10px; max-width: 900px; width: 95%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .modal-content h2 { color: #003366; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #f0f8ff; }
+        input[type="number"] { width: 70px; }
+        select, input { padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #00aaff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0088cc; }
+        .close-btn { background: #ccc; }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; width: 100%; background: #003366; padding: 20px 0; text-align: center; }
+            nav ul.active { display: flex; }
+            .hero h1 { font-size: 2.5em; }
+            .video-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-container">
+        <div class="logo">
+            <img src="https://newsroom.adt.com/uploads/2021/06/b5586b9a-1c73-46ad-bccf-09ab444e2def.png" alt="ADT Logo">
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">☰</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="crime.html">Crime Rates</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="#" onclick="showLogin(); return false;">Dealer Login</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <iframe class="hero-video" src="https://www.youtube.com/embed/oOzJs3nXq-Q?autoplay=1&mute=1&loop=1&playlist=oOzJs3nXq-Q&controls=0&modestbranding=1&rel=0&playsinline=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>Hear How ADT Saved a Family's Life</h1>
+        <p>A real story: ADT's fire & carbon monoxide monitoring saved this family when disaster struck in the middle of the night.</p>
+        <p>America's #1 Smart Home Security – Local Authorized Dealer</p>
+        <a href="#testimonials" class="btn">More Real Stories</a>
+        <a href="#packages" class="btn">View Packages</a>
+        <a href="tel:+14089094484" class="btn">Call (408) 909-4484</a>
+    </div>
+</section>
+
+<section id="testimonials">
+    <h2>Real ADT Customer Stories – Lives Saved</h2>
+    <p>Hear from families whose lives were protected by ADT's monitoring and detection systems.</p>
+    <div class="video-grid">
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/oOzJs3nXq-Q" title="Minnesota Family Saved from Fire & CO" allowfullscreen></iframe>
+            <p>Minnesota family escapes house fire thanks to ADT's quick response.</p>
+        </div>
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/bA1JhpSrUUo" title="Shrewsbury MA Chemical Fire" allowfullscreen></iframe>
+            <p>Woman saved from deadly chemical fire in her home.</p>
+        </div>
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/7tLzPJ2akzw" title="Grandma Rogers Saved from Fire" allowfullscreen></iframe>
+            <p>Grandma Grace and her guinea pig saved from house fire.</p>
+        </div>
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/CrJ8EQF8gK4" title="Steffens Family Indianapolis Fire" allowfullscreen></iframe>
+            <p>Indianapolis family protected from devastating bedroom fire.</p>
+        </div>
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/XYdOSQx_Afo" title="Tulsa OK Smoke Detector Save" allowfullscreen></iframe>
+            <p>Woman asleep saved by ADT smoke detector activation.</p>
+        </div>
+        <div class="video-card">
+            <iframe src="https://www.youtube.com/embed/jVtFBZbR3o4" title="Cleveland OH Porch Fire" allowfullscreen></iframe>
+            <p>Man woken by ADT detector as porch erupts in flames.</p>
+        </div>
+    </div>
+</section>
+
+<section id="reviews">
+    <h2>What Our Customers Say</h2>
+    <p>Five-star reviews from verified ADT customers highlighting ease of use, recommendations, and real-life benefits.</p>
+    <div class="reviews-grid">
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="quote">"The installers that came in and did the equipment were wonderful. [...] I have the features that get hooked up to the police department and the fire station, and they're good. I have never had to use them, but I like the features."</div>
+            <div class="meta">- Gina, Nov. 20, 2023 (Consumer Affairs)</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="quote">"Every time I have an issue or can't figure out something, ADT’s representative [...] video-chatted me, showed me what to do [...] I love it because they let me know who's sneaking out or who's not [...] The neighbors were asking my son how much it cost [...] You tell one and the whole neighborhood knows."</div>
+            <div class="meta">- Anonymous, Nov. 19, 2023 (Consumer Affairs)</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="quote">"Over the years, one thing that has really stood out to me is their outstanding customer service. The service team is incredibly patient [...] making the user experience smooth across all our gadgets. [...] I've been an advocate for ADT for quite a while and a couple of my neighbors have added it."</div>
+            <div class="meta">- Anonymous, Aug. 7, 2025 (Consumer Affairs)</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="quote">"One memorable incident was when a house guest accidentally set off our alarm. ADT was on the phone almost immediately [...] Their promptness in addressing the situation made us feel very secure. [...] I'd say 'run, do not walk,' to secure their services [...] I would confidently recommend ADT to anyone."</div>
+            <div class="meta">- Anonymous, Dec. 8, 2025 (Consumer Affairs)</div>
+        </div>
+        <div class="review-card">
+            <div class="stars">★★★★★</div>
+            <div class="quote">"Navigating their system interface is also intuitive, with easily accessible menus and prompts. [...] They ensure that whenever a door opens, I'm aware, adding to my peace of mind. [...] I would confidently recommend ADT to friends and family for reliable home security."</div>
+            <div class="meta">- Anonymous, Dec. 8, 2025 (Consumer Affairs)</div>
+        </div>
+    </div>
+</section>
+
+<section id="packages">
+    <h2>Choose Your Perfect ADT Package</h2>
+    <div class="packages-grid">
+        <div class="package-card">
+            <h3>Secure Starter</h3>
+            <div class="price">$349 Equipment + $36.99/mo Monitoring</div>
+            <ul class="features">
+                <li>ADT Command Panel</li>
+                <li>3 Door/Window Sensors</li>
+                <li>1 Motion Sensor</li>
+                <li>24/7 Professional Monitoring</li>
+                <li>Installation: $199</li>
+            </ul>
+            <a href="#contact" class="btn">Get Quote</a>
+        </div>
+        <div class="package-card">
+            <h3>Smart Package</h3>
+            <div class="price">$599 Equipment + $42.99/mo Monitoring</div>
+            <ul class="features">
+                <li>All Secure Starter Features</li>
+                <li>Google Nest Thermostat</li>
+                <li>Yale Smart Lock</li>
+                <li>Smart Home Integration</li>
+                <li>Installation: $249</li>
+            </ul>
+            <a href="#contact" class="btn">Get Quote</a>
+        </div>
+        <div class="package-card">
+            <h3>Video & Smart Home Complete</h3>
+            <div class="price">$799 Equipment + $49.99/mo Monitoring</div>
+            <ul class="features">
+                <li>All Smart Package Features</li>
+                <li>2 Google Nest Cams</li>
+                <li>Video Monitoring</li>
+                <li>Smoke/CO Detector</li>
+                <li>Installation: $299</li>
+            </ul>
+            <a href="#contact" class="btn">Get Quote</a>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <h2>Our ADT Security Services</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>Home Alarm Systems</h3>
+            <p>Customizable packages with professional intrusion detection.</p>
+        </div>
+        <div class="service-card">
+            <h3>24/7 Monitoring</h3>
+            <p>ADT’s six monitoring centers with SMART technology reducing false alarms.</p>
+        </div>
+        <div class="service-card">
+            <h3>Smart Home Integration</h3>
+            <p>Control everything via the ADT+ app with Google Nest.</p>
+        </div>
+        <div class="service-card">
+            <h3>Fire & CO Detection</h3>
+            <p>Early warning and rapid emergency response – just like in the stories above.</p>
+        </div>
+    </div>
+</section>
+
+<section id="why-adt">
+    <h2>Why Choose ADT?</h2>
+    <ul class="why-list">
+        <li>150 years of experience – America’s most trusted brand</li>
+        <li>6 interconnected 24/7 monitoring centers</li>
+        <li>Fastest average alarm response time</li>
+        <li>SMART Monitoring reduces false alarms by over 50%</li>
+        <li>Seamless Google Nest integration</li>
+        <li>Trusted Neighbor™ secure access feature</li>
+        <li>Professional installation by local authorized dealers</li>
+    </ul>
+</section>
+
+<section id="about">
+    <h2>About ADT & Direct Protection Security</h2>
+    <p style="max-width:800px; margin:0 auto;">
+        Founded in 1874, ADT protects millions of homes with innovative technology and unmatched reliability. 
+        As your local authorized dealer, Direct Protection Security brings national expertise directly to your community 
+        with personalized service and professional installation.
+    </p>
+</section>
+
+<section id="contact">
+    <h2>Get Your Free Quote Today</h2>
+    <p>A specialist will contact you within the hour.</p>
+    <form class="contact-form">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email Address" required>
+        <input type="tel" placeholder="Phone Number" required>
+        <input type="text" placeholder="Street Address (Optional)">
+        <textarea placeholder="Tell us about your security needs" rows="5" required></textarea>
+        <button type="submit" class="btn">Submit Request</button>
+    </form>
+    <p style="margin-top:30px;">
+        Or call us: <a href="tel:+14089094484" style="color:#00aaff; font-size:1.2em;">(408) 909-4484</a>
+    </p>
+</section>
+
+<!-- Dealer Login Modal -->
+<div id="login-modal">
+    <div class="modal-content">
+        <h2>Dealer Login</h2>
+        <form onsubmit="login(event)">
+            <input type="password" id="password" placeholder="Enter Password" required style="width:100%; padding:12px; margin:10px 0;">
+            <button type="submit" style="width:100%;">Login</button>
+        </form>
+        <button onclick="hideLogin()" class="close-btn" style="width:100%;">Close</button>
+    </div>
+</div>
+
+<!-- Dealer Dashboard -->
+<div id="dashboard">
+    <div class="modal-content">
+        <h2>Dealer Dashboard – Commission Calculator & Order Entry</h2>
+        <p>Configure equipment for quote generation. Markup: 25% on equipment.</p>
+
+        <form id="quote-form">
+            <h3>Select Package (Auto-Populates Equipment)</h3>
+            <select id="package" onchange="selectPackage()">
+                <option value="none">Custom</option>
+                <option value="secure">Secure Starter</option>
+                <option value="smart">Smart Package</option>
+                <option value="complete">Video & Smart Complete</option>
+            </select>
+
+            <label style="display:block; margin:15px 0;">
+                Install Cost: $<input type="number" id="install-cost" value="150" min="0" step="1" onchange="calcTotal()">
+            </label>
+
+            <h3>Equipment Selection (Qty × Dealer Cost)</h3>
+            <div style="overflow-x:auto;">
+                <table id="equipment-table">
+                    <thead><tr><th>Item</th><th>Dealer Cost</th><th>Qty</th><th>Subtotal</th></tr></thead>
+                    <tbody>
+                        <tr><td>ADT 7" Command Panel</td><td>$173.25</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>ADT Hybrid Panel</td><td>$99.75</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>Verizon LTE Radio</td><td>$52.50</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>AT&T LTE Radio</td><td>$52.50</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>2-Way Mini Sensor (Door/Window)</td><td>$11.55</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>2-Way Motion Sensor</td><td>$22.58</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>Google Nest Thermostat</td><td>$87.14</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>Yale Smart Lock</td><td>$118.88</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>Google Nest Cam Outdoor</td><td>$164.99</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                        <tr><td>Smoke/CO Detector</td><td>$82.00</td><td><input type="number" min="0" value="0" onchange="calcTotal()"></td><td class="subtotal">0.00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p><strong>Dealer Equipment Total: $<span id="dealer-total">0.00</span></strong></p>
+            <p>Customer Equipment (25% Markup): $<span id="customer-equip">0.00</span> | Install Fee: $<span id="install-fee">150.00</span> | Total Quote: $<span id="total-quote">150.00</span></p>
+            <p>Equipment Profit: $<span id="equip-profit">0.00</span></p>
+
+            <h3>Monitoring Rate (Monthly Charge to Customer)</h3>
+            <label style="display:block; margin:15px 0;">
+                Monthly Rate: $<input type="number" id="monthly-rate" value="36.99" min="20" step="0.01" onchange="calcCommission()">
+            </label>
+            <label style="display:block; margin:15px 0;">
+                Pass Multiplier (e.g., 1 for Basic, 1.75 for Smart, 4 for Complete): 
+                <input type="number" id="pass-multiplier" value="1" min="0" step="0.01" onchange="calcCommission()">
+            </label>
+
+            <h3>Credit Class & Volume Bonus</h3>
+            <select id="class" onchange="calcCommission()">
+                <option value="E:28:29">E (below 600) – 28x / >10: 29x</option>
+                <option value="D:30:31">D (600-649) – 30x / >10: 31x</option>
+                <option value="C:32:33">C (650-699) – 32x / >10: 33x</option>
+                <option value="B:33:34">B (700-724) – 33x / >10: 34x</option>
+                <option value="A:34:35">A (725-774) – 34x / >10: 35x</option>
+                <option value="A+:35:36">A+ (>775) – 35x / >10: 36x</option>
+            </select>
+            <input type="number" id="monthly-contracts" placeholder="Contracts this month" min="1" onchange="calcCommission()" style="margin-top:10px;">
+
+            <p><strong>Commission Advance: $<span id="commission">0.00</span></strong></p>
+            <p><strong>Net After Deducts & Equipment Cost: $<span id="net-commission">0.00</span></strong></p>
+
+            <button type="button" onclick="openSignupForm()" style="width:100%; padding:15px; font-size:1.1em; margin-top:20px;">
+                Generate Customer Order Form (Jotform)
+            </button>
+            <button type="button" onclick="logout()" class="close-btn" style="width:100%; margin-top:10px;">
+                Logout
+            </button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2025 Direct Protection Security – Authorized ADT Dealer<br>
+    <a href="https://investor.adt.com/">Investor Relations</a> | 
+    <a href="https://newsroom.adt.com/">Newsroom</a> | 
+    <a href="https://www.adt.com/privacy">Privacy Policy</a></p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        document.querySelector('nav ul').classList.toggle('active');
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    function showLogin() { document.getElementById('login-modal').style.display = 'flex'; }
+    function hideLogin() { document.getElementById('login-modal').style.display = 'none'; }
+    function login(e) {
+        e.preventDefault();
+        if (document.getElementById('password').value === 'subdealer2020') {
+            hideLogin();
+            document.getElementById('dashboard').style.display = 'flex';
+        } else {
+            alert('Invalid password');
+        }
+    }
+    function logout() { document.getElementById('dashboard').style.display = 'none'; }
+
+    function openSignupForm() {
+        window.open('https://form.jotform.com/253484370887167', '_blank');
+    }
+
+    function selectPackage() {
+        const pkg = document.getElementById('package').value;
+        const inputs = document.querySelectorAll('#equipment-table tbody input[type="number"]');
+        inputs.forEach(i => i.value = 0);
+
+        if (pkg === 'secure') {
+            inputs[0].value = 1;
+            inputs[4].value = 3;
+            inputs[5].value = 1;
+            document.getElementById('install-cost').value = 199;
+            document.getElementById('monthly-rate').value = 36.99;
+            document.getElementById('pass-multiplier').value = 1;
+        } else if (pkg === 'smart') {
+            inputs[0].value = 1;
+            inputs[4].value = 3;
+            inputs[5].value = 1;
+            inputs[6].value = 1;
+            inputs[7].value = 1;
+            document.getElementById('install-cost').value = 249;
+            document.getElementById('monthly-rate').value = 42.99;
+            document.getElementById('pass-multiplier').value = 1.75;
+        } else if (pkg === 'complete') {
+            inputs[0].value = 1;
+            inputs[4].value = 3;
+            inputs[5].value = 1;
+            inputs[6].value = 1;
+            inputs[7].value = 1;
+            inputs[8].value = 2;
+            inputs[9].value = 1;
+            document.getElementById('install-cost').value = 299;
+            document.getElementById('monthly-rate').value = 49.99;
+            document.getElementById('pass-multiplier').value = 4;
+        }
+        calcTotal();
+    }
+
+    function calcTotal() {
+        let total = 0;
+        const rows = document.querySelectorAll('#equipment-table tbody tr');
+        rows.forEach(row => {
+            const qty = parseInt(row.querySelector('input').value) || 0;
+            const cost = parseFloat(row.cells[1].textContent.replace('$', '')) || 0;
+            const sub = qty * cost;
+            row.cells[3].textContent = sub.toFixed(2);
+            total += sub;
+        });
+        document.getElementById('dealer-total').textContent = total.toFixed(2);
+        const markup = total * 1.25;
+        document.getElementById('customer-equip').textContent = markup.toFixed(2);
+        const install = parseFloat(document.getElementById('install-cost').value) || 150;
+        document.getElementById('install-fee').textContent = install.toFixed(2);
+        document.getElementById('total-quote').textContent = (markup + install).toFixed(2);
+        document.getElementById('equip-profit').textContent = (markup - total).toFixed(2);
+        calcCommission();
+    }
+
+    function calcCommission() {
+        const monthly = parseFloat(document.getElementById('monthly-rate').value) || 36.99;
+        const pass = parseFloat(document.getElementById('pass-multiplier').value) || 1;
+        const cls = document.getElementById('class').value.split(':');
+        const multiples = [parseInt(cls[1]), parseInt(cls[2])];
+        const contracts = parseInt(document.getElementById('monthly-contracts').value) || 1;
+        const multiple = contracts > 10 ? multiples[1] : multiples[0];
+        const advance = (multiple + pass) * monthly;
+
+        document.getElementById('commission').textContent = advance.toFixed(2);
+
+        const dealerTotal = parseFloat(document.getElementById('dealer-total').textContent) || 0;
+        const holdback = 1.5 * monthly;
+        const installDeduct = 200;
+        const net = advance - installDeduct - holdback - dealerTotal;
+        document.getElementById('net-commission').textContent = net.toFixed(2);
+    }
+
+    calcTotal();
+</script>
+
+</body>
+</html>
